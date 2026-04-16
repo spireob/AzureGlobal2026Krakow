@@ -127,12 +127,3 @@ module "app_service" {
 }
 
 
-resource "azurerm_key_vault_secret" "secrets" {
-
-  name         = ""
-  value        = ""
-  key_vault_id = module.keyvault.vault_id
-  content_type = "text/plain"
-  depends_on = [
-  ]
-}
