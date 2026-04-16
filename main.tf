@@ -74,7 +74,13 @@ module "mssql_server" {
   sql_server_admin = "sqladmin"
   sql_server_name = local.sql_server_name
   sql_server_version = "12.0"
-
+  databases = [{
+    name                 = "appdata"
+    size                 = 2
+    sku                  = "S0"
+    storage_account_type = "Local"
+    collation            = "SQL_Latin1_General_CP1_CI_AS"
+  }]
 }
 
 
