@@ -47,11 +47,13 @@ module "keyvault" {
     location = "${local.location}"
   }
 
+  permissions =[]
+  
   network_acls = {
-    principal_id = module.umi.managed_identity_client_id
-    role_definition_name = "Key Vault Administrator"
-    skip_service_principal_aad_check = true
+    default_action             = "Deny"
+    bypass                     = "AzureServices"
   }
+
 
   # list(object({
   #   principal_id                     = string
