@@ -32,15 +32,15 @@ module "umi" {
 }
 
 
-module "acr" {
-  source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git//container_registry"
-  container_registry_name = local.acr_name
-  resource_group = {
-    name = "${local.resource_group}"
-    location = "${local.location}"
-  }
-  tags = local.tags
-}
+# module "acr" {
+#   source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git//container_registry"
+#   container_registry_name = local.acr_name
+#   resource_group = {
+#     name = "${local.resource_group}"
+#     location = "${local.location}"
+#   }
+#   tags = local.tags
+# }
 
 
 module "keyvault" {
@@ -124,4 +124,15 @@ module "app_service" {
     name = "${local.resource_group}"
     location = "${local.location}"
   }
+}
+
+
+resource "azurerm_key_vault_secret" "secrets" {
+
+  name         = ""
+  value        = ""
+  key_vault_id = module.keyvault.vault_id
+  content_type = "text/plain"
+  depends_on = [
+  ]
 }
