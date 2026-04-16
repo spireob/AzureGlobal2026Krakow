@@ -8,6 +8,7 @@ locals {
     
     acr_name = "rguser7acr"
     keyvault_name = "rg-user7-kv"
+    sql_server_name = "rg-user7-sql"
 }
 resource "azurerm_resource_group" "rg" {
   name = "${local.resource_group}"
@@ -54,11 +55,19 @@ module "keyvault" {
     bypass                     = "AzureServices"
   }
 
-
-  # list(object({
-  #   principal_id                     = string
-  #   role_definition_name             = string
-  #   skip_service_principal_aad_check = optional(bool, false)
-  # }))
   tags = local.tags
+}
+
+
+module "mssql_server" {
+  source = "git::https://github.com/pchylak/global_azure_2026_ccoe.git?ref=mssql_server/v1.0.0"
+  # also any inputs for the module (see below)
+  resource_group = {
+    name = "${local.resource_group}"
+    location = "${local.location}"
+  }
+  sql_server_admin = "sqladmin"
+  sql_server_name = local.sql_server_name
+  sql_server_version = "12.0"
+
 }
