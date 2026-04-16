@@ -116,7 +116,8 @@ module "app_service" {
   app_service_name = local.app_service_name
   app_service_plan_id = module.service_plan.app_service_plan.id
   app_settings = {
-
+ "DB_SERVER" = module.mssql_server.server
+ "APPINSIGHTS_INSTRUMENTATIONKEY" = module.application_insights.instrumentation_key
   }
   identity_client_id = module.umi.managed_identity_client_id
   identity_id = module.umi.managed_identity_id
@@ -125,5 +126,4 @@ module "app_service" {
     location = "${local.location}"
   }
 }
-
 
